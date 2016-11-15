@@ -1,10 +1,10 @@
-﻿// Type definitions for total.js
+// Type definitions for total.js
 // Project: http://totaljs.com
 // Definitions by: Lucien Zuercher <https://github.com/bigz94>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-/// <reference path="../node/node.d.ts" />
-/// <reference path="./nosql.d.ts" />
+/// <reference path="../node_modules/@types/node/index.d.ts" />
+
 
 /**
  * Total js module, containing all definitions
@@ -63,12 +63,12 @@ declare module TotalJS {
         /**
          * 
          */
-        global;
+        global: any;
 
         /**
          * 
          */
-        helpers;
+        helpers: any;
 
         /**
          * 
@@ -167,13 +167,13 @@ declare module TotalJS {
         
         /**< Functions */
 
-        accept(extension, contentType?): Framework;
+        accept(extension: any, contentType?: any): Framework;
 
-        assert(name, fn): Framework;
+        assert(name: string, fn:any): Framework;
 
-        assert(name, url, callback, method?, data?, headers?, xhr?): Framework;
+        assert(name:string, url:string, callback:any, method?:any, data?:any, headers?:any, xhr?:any): Framework;
 
-        change(message, name, uri?, ip?): Framework;
+        change(message:string, name:string, uri?:any, ip?:string): Framework;
 
         /**
          * 
@@ -183,33 +183,33 @@ declare module TotalJS {
         /**
          * 
          */
-        configure(value, rewrite?): Framework;
+        configure(value:any, rewrite?:any): Framework;
 
-        controller(name): Controller;
-        controller<T>(name): T;
+        controller(name: string): Controller;
+        controller<T>(name: string): T;
 
-        database(name): NoSQLDatabase;
+        database(name: string): any;//NoSQLDatabase;
 
-        decrypt(name, key, jsonConvert?): Framework;
+        decrypt(name: string, key: string, jsonConvert?:any): Framework;
 
-        encrypt(value, key, isUnique?): Framework;
+        encrypt(value:any, key: string, isUnique?:any): Framework;
 
-        error(err, name, uri?): Framework;
+        error(err: string, name: string, uri?:any): Framework;
 
         eval(fn: Function): Framework;
 
         eval(url: string): Framework;
 
-        file(name: string, fnExec: (req, res, isValidation: boolean) => void): Framework;
+        file(name: string, fnExec: (req:any, res:any, isValidation: boolean) => void): Framework;
 
         file(
             name: string,
             fnValid: (req?: Object) => void,
-            fnExec: (req?, res?, isValidation?: boolean) => void,
+            fnExec: (req?:any, res?:any, isValidation?: boolean) => void,
             middleware?: string[]
             ): Framework;
 
-        hash(type, value, salt?): Framework;
+        hash(type:any, value:any, salt?:any): Framework;
 
         /**
          * Run the framework (HTTP).
@@ -239,9 +239,9 @@ declare module TotalJS {
                 https?: { key: any; cert: any; };
             }): Framework;
 
-        install(type, declaration): Framework;
+        install(type:any, declaration:any): Framework;
 
-        install(type, name, declaration, options?, callback?): Framework;
+        install(type:any, name:string, declaration:any, options?:any, callback?:any): Framework;
 
         /**
          * Indicates whether the static file is processed internally. This function 
@@ -266,27 +266,27 @@ declare module TotalJS {
          * @return Totaljs Framework object
          */
         middleware(name: string, fn: (
-            req,
-            res,
+            req:any,
+            res:any,
             next: () => void,
             options?: Object,
-            controller?: TotalJS.Controller) => void);
+            controller?: TotalJS.Controller) => void): Framework;
 
-        model(name: string);
+        model(name: string): Object;
         model<T>(name: string): T;
 
-        module(name): any;
-        module<T>(name): T;
+        module(name: string): any;
+        module<T>(name: string): T;
 
-        noCache(req, res?): Framework;
+        noCache(req:any, res?:any): Framework;
 
-        notModified(req, res, compare?, strict?): Framework;
+        notModified(req:any, res:any, compare?: Date|string, strict?: boolean): Framework;
 
         problem(message: string, name: string, uri?: Object, ip?: string): Framework;
 
         reconnect(): Framework;
 
-        redirect(oldHost, newHost, copyPath?, permanent?): Framework;
+        redirect(oldHost: string, newHost: string, copyPath?:boolean, permanent?:boolean): Framework;
 
         refresh(clear?: boolean): Framework;
 
@@ -313,19 +313,21 @@ declare module TotalJS {
 
         resource(name: string, key: string): Framework;
 
-        response401(req, res): Framework;
+        response401(req: Object, res: Object, problem?:string): Framework;
 
-        response403(req, res): Framework;
+        response403(req: Object, res: Object, problem?:string): Framework;
 
-        response404(req, res): Framework;
+        response404(req: Object, res: Object, problem?:string): Framework;
 
-        response500(req, res): Framework;
+        response500(req: Object, res: Object, err: Error): Framework;
 
-        response501(req, res): Framework;
+        response501(req: Object, res: Object, problem?:string): Framework;
+
+        responseBinary(req: Object, res: Object, contentType: string, buffer: Buffer, type?: string, downloadName?: string, headers?: Object): Framework;
 
         responseContent(req: Object, res: Object, code: number, contentBody: string, contentType: string, compress?: boolean, heades?: Object): Framework;
 
-        responseCustom(req, res): Framework;
+        responseCustom(req: Object, res: Object): Framework;
 
         responseFile(req: Object, res: Object, filename: string, downloadName?: string, headers?: Object): Framework;
 
@@ -341,7 +343,7 @@ declare module TotalJS {
 
         responseRedirect(req: Object, res: Object, url: string, permament?: boolean): Framework;
 
-        responseStatic(req, res): Framework;
+        responseStatic(req: Object, res: Object): Framework;
 
         responseStream(req: Object, res: Object, contentType: string, stream: Object, downloadName: string, headers?: Object): Framework;
 
@@ -468,9 +470,10 @@ declare module TotalJS {
          */
         onError(err: Error, name: string, uri: Object): void;
 
-        onLoad(framework: Object);
+        //onLoad(framework: Object);
+        onLocale(req: Object, res: Object): string;
 
-        onMail(address, subject, body, callback): Framework;
+        onMail(address: string|string[], subject: string, body: string, callback: ()=>{}, replyTo?: string): Framework;
 
         /**
          * Render meta tags into the view.
@@ -483,23 +486,25 @@ declare module TotalJS {
          */
         onMeta(title: string, description: string, keywords: string, image: string): string;
 
-        onRequest(req, res): boolean;
-
-        onRoute(req, res): boolean;
-
-        onValidation(name, value): boolean;
-
         /**
-         * This delegate adjusted file name of static file. Into the delegate are inserted 
-         * all static files (e.g.: JavaScript, CSS, images from IMG tags, images from CSS, 
-         * etc.). 
-         * IMPORTANT: you must return {String} - new file name. For understand 
-         * delegate click on the example.
-         * @param name The realitve name of static file.
-         * 
-         * @see https://github.com/totaljs/examples/tree/master/static-version
+         * The delegate parses request body and you can rewrite this functionality.
          */
-        onVersion(name: string): string;
+        onParseJSON(value: string): Object;
+
+        /**The delegate parses request body (form-urlencoded) and URL QueryString. You can rewrite this functionality. */
+        onParseQuery(value: string): Object;
+
+        /**The delegate parses request body and you can rewrite this functionality. */
+        onParseXML(value: string): Object;
+
+        /**This delegate can rewrite parsing of schemas. SchemaBuilder uses this delegate. */
+        onSchema(req: Request, group: string, name: string, callback: ()=>{}): undefined;
+
+        /**This delegate can change a theme for the current controller. */
+        onTheme(controller: Object): string;
+
+        /**The validation delegate. With the help of this delegate you can validate value of some object easily. */
+        onValidate(name: string, value: any, path: string, model: Object, schemaName: string): boolean;
         
         /**< Events */
 
@@ -770,83 +775,101 @@ declare module TotalJS {
         
         /**< Methods */
 
+        /**Gets the path from framework.config['directory-configs']. */
+        configs(filename?: string): string;
+
         /**
          * Get the controllers path from framework.config['directory-controllers'].
          * @param name? File name without path.
          */
-        controllers(name?: string);
+        controllers(filename?: string): string;
 
         /**
          * Get the public path from framework.config['directory-databases'].
          * @param name? File name without path.
          */
-        databases(name?);
+        databases(filename?: string): string;
         
         /**
          * Get the definitions path from framework.config['directory-definitions'].
          * @param name? File name without path.
          */
-        definitions(name?);
+        definitions(filename?: string): string;
+
+        /**Checks whether the path exists. */
+        exists(path: string, callback: (exists: boolean, size: Number, isFile: boolean) => {}): Framework;
+
+        /**Gets the path from framework.config['directory-isomporhic']. */
+        isomporhic(filename?: string): string;
 
         /**
          * Get the logs path from framework.config['directory-logs'].
          * @param name? File name without path.
          */
-        logs(name?);
+        logs(filename?: string): string;
 
         /**
          * Get the public path from framework.config['directory-models'].
          * @param name? File name without path.
          */
-        models(name?);
+        models(filename?: string): string;
 
         /**
          * Get the modules path from framework.config['directory-modules'].
          * @param name? File name without path.
          */
-        modules(name?);
+        modules(filename?: string): string;
+
+        /**Gets the path from framework.config['directory-packages']. */
+        packages(filename?: string): string;
+
+        /**Gets the path from framework.config['directory-private']. */
+        private(filename?: string): string;
 
         /**
          * Get the public path from framework.config['directory-public'].
          * @param name? File name without path.
          */
-        public(name?);
+        public(filename?: string): string;
 
         /**
          * Get the resources path from framework.config['directory-resources'].
          * @param name? File name without path.
          */
-        resources(name?);
+        resources(filename?: string): string;
 
         /**
          * Get the root path.
          * @param name? File name without path.
          */
-        root(name?);
+        root(filename?: string): string;
 
         /**
          * Get the temp path from framework.config['directory-temp'].
          * @param name? File name without path.
          */
-        temp(name?);
+        temp(filename?: string): string;
 
         /**
          * Get the tests path from framework.config['directory-tests'].
          * @param name? File name without path.
          */
-        tests(name?);
+        tests(filename?: string): string;
 
         /**
          * Get the views path from framework.config['directory-views'].
          * @param name? File name without path.
          */
-        views(name?);
+        views(filename?: string): string;
+
+        /**Gets the path from framework.config['directory-public-virtual']. */
+        virtual(filename?: string): string;
 
         /**
          * Get the workers path from framework.config['directory-workers'].
          * @param name? File name without path.
          */
-        workers(name?);
+        workers(filename?: string): string;
 
     }
 
@@ -1091,37 +1114,38 @@ declare module TotalJS {
         /**
          *
          */
-        all(fn);
+        all(fn: (connection: any, index: number) => {}): Controller;
         
         /**
-         *
+         *Destroys the controller when controller.online === 0.
          */
-        await(name, fn);
+        autodestroy(callback: () => {}): Controller;
         
         /**
-         *
+         *Gets/Sets the basic access authentication (baa). It returns the object with username and password.
          */
-        baa(name?);
+        baa(name?: string): Object;
     
         /**
-         *
+         *Sends the binary response.
          */
-        binary(buffer, contentType);
+        binary(buffer: Buffer, contentType: string, type?:string, download?: string, headers?: Object): Controller;
         
         /**
-         *
+         *Returns the wrapped function callback(err, some_data). In case of the error the framework throws controller.throw500(error) and if the error is 
+         ErrorBuilder then the framework responds with controller.content(error).
          */
-        callback(view_name?);
+        callback(view_name?: string): ()=> {};
     
         /**
-         *
+         *Cancels the action execution.
          */
-        cancel();
+        cancel(): Controller;
         
         /**
-         *
+         *Creates a change.
          */
-        change(message);
+        change(message: string): Controller;
         
         /**
          * Clear uploaded files. Important: for prevent auto clearing use controller.noClear().
@@ -1207,7 +1231,7 @@ declare module TotalJS {
 
         custom(): boolean;
 
-        database(name: string): NoSQLDatabase;
+        database(name: string): any; //NoSQLDatabase;
 
         /**
          * Compare date with current date. This method can be used in views.
@@ -1319,7 +1343,8 @@ declare module TotalJS {
 
         keywords(value: string): Controller;
 
-        layout(name);
+        /**Sets a layout for the current view. */
+        layout(name: string): Controller;
 
         /**
          * Append to log file.
@@ -1385,7 +1410,10 @@ declare module TotalJS {
         
         meta(title: string, description?: string, keywords?: string, picture?: string): Controller;
 
-        mmr(filename: string, stream: NodeJS.ReadableStream, cb?: Function): Controller;
+        /**
+         * Sends binary data via multipart/x-mixed-replace (e.g. IP camera).
+         */
+        mmr(filename: string, stream?: NodeJS.ReadableStream, callback?: Function): Controller;
 
         /**
          * Return a model object.
@@ -1911,7 +1939,7 @@ declare module TotalJS {
          * @param name Name of task.
          * @return Controller object
          */
-        wait(name: string);
+        wait(name: string): Controller;
         
         /**
          * Add a function to async waiting list.
@@ -1921,14 +1949,14 @@ declare module TotalJS {
          * > @param next Completed function.
          * @return Controller object
          */
-        wait(name: string, waitingFor: string, fn: (next: () => void) => void);
+        wait(name: string, waitingFor: string, fn: (next: () => void) => void): Controller;
 
         /**< Delegates */
 
         /**
          * Delegate for capture each request into this controller.
          */
-        request();
+        request(): void;
 
         /**
          * Controller monitoring.
@@ -2011,12 +2039,12 @@ declare module TotalJS {
 		 *
     	 * @names names? client.id, optional - default null
 		 */
-		close(names?: string[]);
+		close(message?: string, code?: number): WebSocketClient;
 		
 		/**
 		 * Destroy websocket
 		 */
-		destroy();
+		destroy(): WebSocketClient;
 		
 		/**
 		 * Find a client
@@ -2037,7 +2065,11 @@ declare module TotalJS {
     	 * @param names? Ids of the client to send to, default null
     	 * @param blacklist? Ids of the clients to remove from list to send message to, default null
 		 */
-		send(value: string, names?: string[], blacklist?: string[]);
+		send(value: string, names?: string[], blacklist?: string[]): WebSocketClient;
+
+        /**Sends the message via websocket to the current client. */
+        send(message: string|Object): WebSocketClient;
+
 		/**
     	 * Send message to all
          * <pre>
@@ -2050,7 +2082,7 @@ declare module TotalJS {
     	 * @param names? Ids of the client to send to, default null
     	 * @param blacklist? Ids of the clients to remove from list to send message to, default null
 		 */
-		send(value: Object, names?: string[], blacklist?: string[]);
+		send(value: Object, names?: string[], blacklist?: string[]): WebSocketClient;
 				 
         /**< Events */
 
@@ -2344,9 +2376,16 @@ declare module TotalJS {
          */
         ls(path: string,
             callback: (files?: string, directories?: string[]) => void,
-            filter?: (path?: string, isDirectory?: boolean) => boolean);
+            filter?: (path?: string, isDirectory?: boolean) => boolean): undefined;
 
-        noop();
+        ls2(path: string, callback: (files: string[], directories: string[])=>{}, filter?: (path: string, isDirectory: boolean) => {}): undefined;
+
+        
+        minifyHTML(value: string): string;
+        minifyScript(value: string): string;
+        minifyStyle(value: string): string;
+
+        noop(): undefined;
 
         parseFloat(value: Object): number;
 
@@ -2372,7 +2411,7 @@ declare module TotalJS {
          * @param prop Reduce an object properties by the array or object.
          * @return Reduced Object
          */
-        reduce(source: Object, prop: Object): Object;
+        reduce(source: Object|Object[], prop: string[]|Object, reverse?: boolean): Object;
 
         /**
          * Remove string diacritics.
@@ -2462,7 +2501,7 @@ declare module TotalJS {
                 response?: string
             ) => void, 
             headers?: Object, 
-            method?: string);
+            method?: string): any;
         /**
          * Send stream to an url address.
          * @param name Name of file with extension.
@@ -2483,7 +2522,7 @@ declare module TotalJS {
                 response?: string
             ) => void,
             headers?: Object,
-            method?: string);
+            method?: string): any;
 
         trim(obj: Object): Object;
 
@@ -2516,7 +2555,7 @@ declare module TotalJS {
             builder?: ErrorBuilder, 
             resource?: (
                 key?: string
-            ) => void);
+            ) => void): any;
 
     }
 
@@ -2589,7 +2628,7 @@ declare module TotalJS {
                 password?: string;
                 timeout?: number;
             },
-            callback?: () => void);
+            callback?: () => void): Mail;
 
         /**
          * Add a to e-mail address.
@@ -2681,13 +2720,13 @@ declare module TotalJS {
         quality(percentage: number): Image;
 
         resize(width: string, height: string, options?: Object): Image;
-        resize(both: string);
+        resize(both: string): Image;
 
         resizeCenter(width: string, height: string): Image;
 
         rotate(deg: number): Image;
 
-        save(filename: string, callback?: (err?: Error, filename?: string) => void);
+        save(filename: string, callback?: (err?: Error, filename?: string) => void): Image;
 
         scale(width: string, height: string, options: Object): Image;
 
@@ -2717,21 +2756,21 @@ declare module TotalJS {
 
         /**< Methods */
 
-        add(name, errorMessage?);
+        add(name: string, errorMessage?:string): ErrorBuilder;
 
-        clear();
+        clear(): ErrorBuilder;
 
-        hasError(name?);
+        hasError(name?: string): boolean;
 
-        json(beautify?);
+        json(beautify?: boolean): ErrorBuilder;
 
-        read(name);
+        read(name: string): string;
 
-        remove(name);
+        remove(name: string): ErrorBuilder;
 
-        replace(search, newValue);
+        replace(search: string, newValue: string): ErrorBuilder;
 
-        resource(name, prefix?);
+        resource(name: string, prefix?: string): ErrorBuilder;
 
         /**
          * Create an instance.
@@ -2816,14 +2855,18 @@ declare module TotalJS {
      * }
      * </pre>
      */
-    interface SchemaBuilder {
+    interface SchemaBuilder 
+    {
+        fields: string[];
+        name: string;
+        trim: boolean;
 
         /**< Methods */
 
         create(name: string): Object;
         defaults(name: string): Object;
         prepare(name: string, model: Object): Object;
-        remove(name: string);
+        remove(name: string): SchemaBuilder;
 
         schema(name: string,
             definition: Object,
@@ -3038,7 +3081,8 @@ interface Response {
     image(filename: string, fnProcess: (image?: TotalJS.Image) => void, headers?: Object): Response;
     json(body: Object): Response;
     noCache(): Response;
-    send(code, body, type?: string): Response;
+    redirect(url: string, permament?: boolean): Response;
+    send(code?: Number, body?: string|Object, type?: string): Response;
     send(): Response;
     stream(type: string, stream: NodeJS.ReadableStream, downloadName?: string, headers?: Object): Response;
 
@@ -3054,8 +3098,8 @@ interface String {
 
     base64ContentType(): string;
     base64ToFile(filename: string, callback?: (err?: Error) => void): string;
-    contains(value: string, mustAll?: boolean);
-    contains(value: Array<any>, mustAll?: boolean);
+    contains(value: string, mustAll?: boolean): boolean;
+    contains(value: Array<any>, mustAll?: boolean): boolean;
     count(word: string): string;
     decode(): string;
     decrypt(key: string): string;
@@ -3251,17 +3295,17 @@ declare function CONFIG<T>(key: string): T;
 declare function CONTROLLER(name: string): TotalJS.Controller;
 declare function CONTROLLER<T>(name: string): T;
 
-declare function DATABASE(): TotalJS.NoSQLDatabase;
+declare function DATABASE(): any;//TotalJS.NoSQLDatabase;
 
 declare function FUNCTION(name: string): TotalJS.Framework;
 
 declare function INCLUDE(name: string, options?: Object): Object;
 declare function INCLUDE<T>(name: string, options?: Object): T;
 
-declare function INSTALL(type: string, declaration: string, options?: Object, callback?: (err: Error) => void);
-declare function INSTALL(type: string, declaration: Function, options?: Object, callback?: (err: Error) => void);
-declare function INSTALL(type: string, name: string, declaration: string, options?: Object, callback?: (err: Error) => void);
-declare function INSTALL(type: string, name: string, declaration: Function, options?: Object, callback?: (err: Error) => void);
+declare function INSTALL(type: string, declaration: string, options?: Object, callback?: (err: Error) => void): TotalJS.Framework;
+declare function INSTALL(type: string, declaration: Function, options?: Object, callback?: (err: Error) => void): TotalJS.Framework;
+declare function INSTALL(type: string, name: string, declaration: string, options?: Object, callback?: (err: Error) => void): TotalJS.Framework;
+declare function INSTALL(type: string, name: string, declaration: Function, options?: Object, callback?: (err: Error) => void): TotalJS.Framework;
 
 declare function LOG(): TotalJS.Framework;
 
